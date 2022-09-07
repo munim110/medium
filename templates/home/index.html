@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<a href="{% url 'signout' %}">Logout</a>
+
+<form action="#" method="post">
+    
+    {% csrf_token %}
+    <input type="text" name="post" placeholder="What's on your mind">
+    <input type="submit" value="Post">
+</form>
+
+{% for post in posts %}
+
+<div class="post">
+    <p>{{ post.user.user.username }}</p>
+    <p>{{ post.text }}</p>
+
+{% endfor %}
+
+
+{% endblock %}
