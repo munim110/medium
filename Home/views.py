@@ -51,6 +51,6 @@ def singlepost(request, post_id):
         liked = True
     else:
         liked = False
-    comments = post.comments.all()
+    comments = post.comments.all().order_by('-date')
     return render(request, 'post/singlepost.html',{'post':post, 'liked':liked, 'likes':likes,
     'comments':comments, 'likers':all_likers})
