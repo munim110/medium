@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1 align="center"> {{ post.user.user.username }} </h1>
+<p> {{ post.text }} </p>
+<p> {{ post.date }} </p>
+<a href="{% url 'like' post.id %}">
+{% if liked %}
+Unlike this post
+{% else %}
+Like this post
+{% endif %}
+{{ likes }}
+</a>
+Liked by
+{% for user in likers %}
+
+{{ user.user.username }},
+
+{% endfor %}
+
+<br>
+
+<form action="#" method="post">
+{% csrf_token %}
+<input type="text" name="comment" placeholder="Comment">
+<input type="submit" value="Comment">
+</form>
+
+{% for comment in comments %}
+<p> {{ comment.user.user.username }} </p>
+<p> {{ comment.text }} </p>
+<p> {{ comment.date }} </p>
+{% endfor %}
+
+{% endblock %}
