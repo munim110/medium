@@ -5,6 +5,14 @@
 <h1 align="center"> {{ post.user.user.username }} </h1>
 <p> {{ post.text }} </p>
 <p> {{ post.date }} </p>
+
+{% if can_edit %}
+
+<a href="{% url 'editpost' post.id %}"> Edit </a>
+
+{% endif %}
+<br><br>
+
 <a href="{% url 'like' post.id %}">
 {% if liked %}
 Unlike this post
@@ -31,6 +39,9 @@ Liked by
 {% for comment in comments %}
 <p> {{ comment.user.user.username }} </p>
 <p> {{ comment.text }} </p>
+{% if username == comment.user.user.username %}
+<p> <a href="{% url 'editcomment' post.id comment.id %}"> Edit </a> </p>
+{% endif %}
 <p> {{ comment.date }} </p>
 {% endfor %}
 

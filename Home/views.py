@@ -51,6 +51,39 @@ def singlepost(request, post_id):
         liked = True
     else:
         liked = False
+
+    can_edit = request.user == post.user.user
     comments = post.comments.all().order_by('-date')
     return render(request, 'post/singlepost.html',{'post':post, 'liked':liked, 'likes':likes,
-    'comments':comments, 'likers':all_likers})
+    'comments':comments, 'likers':all_likers, 'can_edit':can_edit, 'username':request.user.username})
+
+
+def editPost(request, post_id):
+    post = Post.objects.get(id=post_id)
+    user = UserProfile.objects.get(user=request.user)
+    if request.method == "POST":
+        text = request.POST.get('post')
+        if text is not None and text != '':
+            post.text = text
+            post.save()
+            return redirect(singlepost, post_id=post_id)
+    else:
+        if post.user == user:
+            return render(request, 'post/editpost.html',{'post':post})
+        else:
+            return redirect(singlepost, post_id=post_id)
+
+def editComment(request, post_id, comment_id):
+    comment = Comment.objects.get(id=comment_id)
+    user = UserProfile.objects.get(user=request.user)
+    if request.method == "POST":
+        text = request.POST.get('comment')
+        if text is not None and text != '':
+            comment.text = text
+            comment.save()
+            return redirect(singlepost, post_id=post_id)
+    else:
+        if comment.user == user:
+            return render(request, 'post/editcomment.html',{'comment':comment})
+        else:
+            return redirect(singlepost, post_id=post_id)
