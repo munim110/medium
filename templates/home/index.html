@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 
-{% block content %}
+{% block content %} 
 
-<a href="{% url 'signout' %}">Logout</a>
+<br>
+
+<a href="{% url 'signout' %}">Logout</a>        <a href="{% url 'profile' username %}"> profile </a> <br>
 
 <form action="#" method="post">
     

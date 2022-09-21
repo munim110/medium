@@ -18,7 +18,7 @@ def home(request):
 
     else:
         posts = Post.objects.all().order_by('-date')
-        return render(request, 'home/index.html',{'posts':posts})
+        return render(request, 'home/index.html',{'posts':posts, 'username':request.user.username})
 
 def like(request, post_id):
     post = Post.objects.get(id=post_id)
@@ -87,3 +87,4 @@ def editComment(request, post_id, comment_id):
             return render(request, 'post/editcomment.html',{'comment':comment})
         else:
             return redirect(singlepost, post_id=post_id)
+

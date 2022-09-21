@@ -6,4 +6,5 @@ urlpatterns = [
     path('', signin, name='signin'),
     path('error/', error, name='error'),
     path('signout/', signout, name='signout'),
+    path('profile/<slug:username>', profile, name='profile'),
 ]

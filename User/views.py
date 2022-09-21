@@ -59,3 +59,10 @@ def signout(request):
     return redirect(signin)
 
 
+def profile(request, username):
+    print(username)
+    user = User.objects.get(username=username)
+    userprofile = UserProfile.objects.get(user=user)
+    return render(request, 'user/profile.html', {'user': userprofile})
+
+
